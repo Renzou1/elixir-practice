@@ -26,6 +26,18 @@ defmodule Vendas do
     vendas(n) + venda_total(n-1)
   end
 
+
+
+  def venda_total(menor, maior), do: venda_total_(menor, maior, 0)
+
+  defp venda_total_(menor, maior, soma) do
+    cond do
+      maior > menor -> soma + venda_total_(menor, maior - 1, soma)
+      maior == menor -> vendas(menor)
+      true -> -1
+    end
+  end
+
   def maxi(a, b) do
     cond do
       a > b -> a
@@ -38,6 +50,15 @@ defmodule Vendas do
       n == 0 -> vendas(0)
     end
   end
+
+  def maior_venda(menor, maior) do
+    cond do
+      maior > menor -> maxi(vendas(maior), maior_venda(menor, maior - 1))
+      maior == menor -> vendas(menor)
+      true -> -1
+    end
+  end
+
   def semana_max_venda(n) do
     cond do
       maior_venda(n) == vendas(n) -> n
@@ -53,7 +74,7 @@ defmodule Vendas do
     end
   end
 
-  def acha_semana(s, -1), do: -1
+  def acha_semana(_s, -1), do: -1
   def acha_semana(s, n) do
     cond do
       vendas(n) == s -> n
@@ -63,5 +84,28 @@ defmodule Vendas do
 
   #def zero_vendas(n)
     #acha_semana(0, 10)
+
+    def produtorio(menor, maior) do
+      cond do
+        menor < maior -> maior * produtorio(menor, maior - 1)
+        menor == maior -> menor
+      end
+    end
+
+    def potencia(base, 0), do: 1
+
+    def potencia(base, expoente) do
+      cond do
+        expoente == 1 -> base
+        true -> base * potencia(base, expoente-1)
+      end
+    end
+
+    def fib(0), do: 0
+    def fib(1), do: 1
+    def fib(n) do
+      fib(n - 1) + fib(n - 2)
+    end
+
 
 end
